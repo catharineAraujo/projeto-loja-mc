@@ -1,0 +1,95 @@
+/* --- Estilo geral da página de Login/Cadastro --- */
+
+body {
+    background: #dbdbdb;
+    font-family: "Arial", sans-serif;
+    padding-top: 120px; /* espaço por causa do header fixo */
+}
+
+/* Container central */
+.container {
+    background: #ffffff;
+    width: 350px;
+    margin: 30px auto;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    text-align: center;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Títulos */
+.container h2 {
+    color: #36004b;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+/* Labels */
+label {
+    display: block;
+    text-align: left;
+    font-weight: bold;
+    margin: 8px 0 3px;
+    color: #333;
+}
+
+/* Inputs */
+input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: #6800bd;
+    box-shadow: 0 0 6px rgba(104,0,189,0.4);
+}
+
+/* Botões principais */
+button {
+    width: 100%;
+    background: linear-gradient(to right, #36004b, #6800bd);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 15px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #36004b;
+}
+
+/* Trocar entre login e cadastro */
+.switch {
+    margin-top: 15px;
+    color: #6800bd;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.switch:hover {
+    color: #36004b;
+    text-decoration: underline;
+}
+
+/* Responsividade */
+@media (max-width: 420px) {
+    .container {
+        width: 90%;
+    }
+}

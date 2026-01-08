@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M&C Company</title>
+    <link rel="icon" href="images/cart-shopping-solid-full.svg" type="image/x-icon">
+    <link rel="stylesheet" href="perfil.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+<header>
+    <h1>M&C Company</h1>
+    <nav>
+        <ul>
+            <li><a href="principal.html"><i class="fa-solid fa-house"></i> Início</a></li>
+            <li><a href="perfil.html"><i class="fa-solid fa-user"></i> Perfil</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- CAIXA VISÍVEL PARA USUÁRIOS LOGADOS -->
+<div id="areaLogado" class="container" style="display:none;">
+    <h2>Bem-vindo, <span id="nomeUsuario"></span>!</h2>
+    <p><strong>Email:</strong> <span id="emailUsuario"></span></p>
+    <button class="logoutBtn" onclick="logout()">Sair</button>
+</div>
+
+<!-- LOGIN -->
+<div class="container" id="loginBox">
+    <h2>Login</h2>
+
+    <label>Email:</label>
+    <input type="email" id="loginEmail" placeholder="Digite seu email" required>
+
+    <label>Senha:</label>
+    <input type="password" id="loginSenha" placeholder="Digite sua senha" required>
+
+    <button onclick="login()">Entrar</button>
+
+    <p class="switch" onclick="mostrarCadastro()">Criar conta</p>
+</div>
+
+<!-- CADASTRO -->
+<div class="container" id="cadastroBox" style="display:none;">
+    <h2>Cadastro</h2>
+
+    <label>Nome:</label>
+    <input type="text" id="cadNome" placeholder="Digite seu nome" required>
+
+    <label>Email:</label>
+    <input type="email" id="cadEmail" placeholder="Digite seu email" required>
+
+    <label>Senha:</label>
+    <input type="password" id="cadSenha" placeholder="Crie uma senha" required>
+
+    <button onclick="cadastrar()">Cadastrar</button>
+
+    <p class="switch" onclick="mostrarLogin()">Já tenho conta</p>
+</div>
+
+
+<script>
+/* --- Alternância Login / Cadastro --- */
+function mostrarCadastro() {
+    loginBox.style.display = "none";
+    cadastroBox.style.display = "block";
+}
+
+function mostrarLogin() {
+    cadastroBox.style.display = "none";
+    loginBox.style.display = "block";
+}
+
+/* --- Cadastro --- */
+function cadastrar() {
+    const nome = cadNome.value;
+    const email = cadEmail.value;
+    const senha = cadSenha.value;
+
+    if (nome && email && senha) {
+        localStorage.setItem("usuario", JSON.stringify({
+            nome,
+            email,
+            senha,
+        }));
+
+        alert("Cadastro realizado com sucesso!");
+        mostrarLogin();
+    } else {
+        alert("Preencha todos os campos!");
+    }
+}
+
+/* --- Login Persistente --- */
+function login() {
+    const email = loginEmail.value;
+    const senha = loginSenha.value;
+
+    const usuario = JSON.parse(localStorage.getItem("usuario"));
+
+    if (usuario && email === usuario.email && senha === usuario.senha) {
+        localStorage.setItem("logado", "true"); // mantém sessão ativa
+        carregarPerfil();
+    } else {
+        alert("Email ou senha incorretos!");
+    }
+}
+
+/* --- Carregar sessão automaticamente --- */
+function carregarPerfil() {
+    const usuario = JSON.parse(localStorage.getItem("usuario"));
+    const logado = localStorage.getItem("logado");
+
+    if (usuario && logado === "true") {
+        loginBox.style.display = "none";
+        cadastroBox.style.display = "none";
+        areaLogado.style.display = "block";
+
+        nomeUsuario.textContent = usuario.nome;
+        emailUsuario.textContent = usuario.email;
+    }
+}
+
+
+/* --- Sair --- */
+function logout() {
+    localStorage.setItem("logado", "false");
+    window.location.reload();
+}
+
+/* --- Ao carregar página --- */
+window.onload = carregarPerfil;
+</script>
+
+</body>
+</html>
